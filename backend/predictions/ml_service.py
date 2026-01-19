@@ -39,11 +39,11 @@ class LaptopPricePredictor:
             with open(os.path.join(self.models_dir, "laptop_model_metadata.pkl"), "rb") as f:
                 self.metadata = pickle.load(f)
 
-            print("Laptop models loaded successfully")
+            print("✅ Laptop models loaded successfully")
         except FileNotFoundError as exc:
-            print(f"Error loading laptop model artifacts: {exc}")
-            print("Please run train_laptop_model.py first to train the model")
-            raise
+            print(f"⚠️  Warning: Laptop model not found: {exc}")
+            print("   ML predictions will not be available until models are trained")
+            # Don't raise - allow Django to start without models
 
     def preprocess_input(self, data):
         """Preprocess input data for prediction."""
@@ -244,11 +244,11 @@ class SmartphonePricePredictor:
             if os.path.exists(stats_path):
                 with open(stats_path, "rb") as f:
                     self.stats = pickle.load(f)
-            print("Smartphone model loaded successfully")
+            print("✅ Smartphone model loaded successfully")
         except FileNotFoundError as exc:
-            print(f"Error loading smartphone model artifacts: {exc}")
-            print("Please run train_smartphone_model.py first to train the model")
-            raise
+            print(f"⚠️  Warning: Smartphone model not found: {exc}")
+            print("   ML predictions will not be available until models are trained")
+            # Don't raise - allow Django to start without models
 
     def _score_accessories(self, accessories: str) -> int:
         if not accessories:
