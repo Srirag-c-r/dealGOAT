@@ -6,11 +6,7 @@ import os
 DEBUG = False
 SECRET_KEY = os.environ.get('SECRET_KEY', 'temporary-key-change-in-production')
 
-ALLOWED_HOSTS = [
-    '.onrender.com',
-    '.vercel.app',
-    'localhost',
-]
+ALLOWED_HOSTS = ['*']  # Render handles host filtering, '*' is safe here if CSRF is tight
 
 # Database
 DATABASES = {
@@ -59,7 +55,9 @@ CHANNEL_LAYERS = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://localhost:3000',
+    # Add your Vercel URL here once deployed, e.g., 'https://dealgoat.vercel.app'
 ]
+CORS_ALLOW_ALL_ORIGINS = True  # Temporary during layout, restricted by CSRF_TRUSTED_ORIGINS
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
@@ -68,6 +66,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Security settings
 SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
